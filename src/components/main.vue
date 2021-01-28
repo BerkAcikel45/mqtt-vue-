@@ -1,6 +1,7 @@
 <template>
   <div class="main">
-      <div class="container">
+     <div v-show="loader" class="loader">Loading...</div>   
+      <div class="container" v-show="!loader">
           <div class="row">
               <div class="col-md-6">
                 <div class="card" style="width: 100%;">
@@ -84,7 +85,9 @@ export default {
         connected: false,
       },
       subscribeSuccess: false,
-      formatted_data: {}
+      formatted_data: {},
+      loader: true,
+
     }
   },
 
@@ -124,6 +127,8 @@ export default {
 
     watch:{
         receiveNews:function(){
+            this.loader = false;
+
             let received = this.receiveNews;
             //delete {, }, " chars
             received = received.replace('}', '');
